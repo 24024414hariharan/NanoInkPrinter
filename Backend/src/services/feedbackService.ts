@@ -33,16 +33,16 @@ export const processFeedback = async (body: any, userId?: number) => {
     },
   });
 
-  if (!waveform || !droplet || !inkProperties || !requiresUpdate(rating)) {
-    return {
-      message: "Feedback recorded successfully.",
-      data: {
-        feedbackId: saved.id,
-        userId,
-        storedAt: saved.createdAt,
-      },
-    };
-  }
+  // if (!waveform || !droplet || !inkProperties || !requiresUpdate(rating)) {
+  //   return {
+  //     message: "Feedback recorded successfully.",
+  //     data: {
+  //       feedbackId: saved.id,
+  //       userId,
+  //       storedAt: saved.createdAt,
+  //     },
+  //   };
+  // }
 
   const refinedWaveform = refineWaveform(waveform, rating);
   const updatedDroplet = predictDroplet(refinedWaveform, inkProperties);

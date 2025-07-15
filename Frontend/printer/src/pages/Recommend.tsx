@@ -64,7 +64,14 @@ const Recommend: React.FC = () => {
       );
 
       // ✅ Redirect to result page with data
-      navigate('/recommend/result', { state: { result: res.data } });
+      navigate('/recommend/result', {
+        state: {
+          result: res.data,
+          inkProperties: form.inkProperties,
+          nozzle: form.nozzle,
+          desiredDroplet: form.desiredDroplet,
+        }
+      });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Recommendation failed.');
     } finally {

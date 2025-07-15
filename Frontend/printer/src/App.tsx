@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Register from './pages/Register';
 import Recommend from './pages/Recommend';
 import RecommendResult from "./pages/RecommendResult";
+import Feedback from "./pages/Feedback";
+import FeedbackResult from "./pages/FeedbackResult";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +21,9 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/recommend" element={<Recommend />} />
         <Route path="/recommend/result" element={<RecommendResult />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/recommend/feedback-result" element={<FeedbackResult />} />
+
       </Routes>
     </Router>
   );
