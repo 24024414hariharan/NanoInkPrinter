@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Recommend.css";
+import { WaveformChart } from "./waveformchart";
 
 const RecommendResult: React.FC = () => {
   const location = useLocation();
@@ -25,6 +26,48 @@ const RecommendResult: React.FC = () => {
     isStable,
     finalRecommendation,
   } = result;
+
+  const renderInputField = (label: string, value: string) => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+      <label style={{ fontWeight: 500, color: "#fff" }}>{label}</label>
+      <input
+        type="text"
+        readOnly
+        value={value}
+        style={{
+          padding: "0.5rem 1rem",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          width: "200px",
+          background: "#f9f9f9",
+          color: "#333",
+          textAlign: 'right',
+          fontSize: '16px',
+          fontWeight:"500"
+        }}
+      />
+    </div>
+  );
+
+  const renderWarning = (message: string) => (
+    <div
+      style={{
+        backgroundColor: "#fff8e1",
+        border: "1px solid #ffecb3",
+        borderRadius: "10px",
+        padding: "1rem 1.5rem",
+        color: "#a66c00",
+        fontWeight: 500,
+        marginTop: "1.5rem",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <span style={{ fontSize: "1.1rem" }}>⚠</span>
+        <span><strong>Warnings:</strong></span>
+      </div>
+      <div style={{ marginTop: "0.5rem", paddingLeft: "1.7rem" }}>{message}</div>
+    </div>
+  );
 
   // Helper function to render categorized data in text boxes
   const renderDataSection = (data: any, title: string) => {
@@ -58,7 +101,35 @@ const RecommendResult: React.FC = () => {
     return (
       <div style={{ marginBottom: "1rem" }}>
         <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>{title}</h4>
-        <textarea
+        {Object.entries(data)
+                  .filter(
+                    ([key]) =>
+                      !["velocity", "frequency", "amplitude"].includes(key)
+                  )
+                  .map(([key, value]) => (
+                    
+                    <div key={key}>
+                      {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                        {key.replace(/_/g, " ")}
+                      </h4>
+                      <input
+                        type="text"
+                        value={String(value)}
+                        readOnly
+                        style={{
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                          border: "1px solid #444",
+                          backgroundColor: "#2a2a2a",
+                          color: "#fff",
+                          fontSize: "16px",
+                        }}
+                      /> */}
+                     {renderInputField(`${key.replace(/_/g, " ")}`, `${String(value)}`)}
+                    </div>
+                  ))}
+        {/* <textarea
           value={Object.entries(data)
             .map(
               ([key, value]) => `${key.replace(/_/g, " ")}: ${String(value)}`
@@ -80,7 +151,7 @@ const RecommendResult: React.FC = () => {
             overflowY: "auto",
             boxSizing: "border-box",
           }}
-        />
+        /> */}
       </div>
     );
   };
@@ -121,13 +192,7 @@ const RecommendResult: React.FC = () => {
           <h3 style={{ marginBottom: "1rem" }}>
             📈 Initial Waveform Parameters
           </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "1rem",
-            }}
-          >
+          <div>
             {initialWaveform && typeof initialWaveform === "object" ? (
               <>
                 {initialWaveform.velocity !== undefined && (
@@ -149,6 +214,7 @@ const RecommendResult: React.FC = () => {
                         fontSize: "16px",
                       }}
                     />
+                     {renderInputField("Rise time (μs)", String(initialWaveform.velocity))}
                   </div>
                 )}
                 {initialWaveform.frequency !== undefined && (
@@ -170,6 +236,7 @@ const RecommendResult: React.FC = () => {
                         fontSize: "16px",
                       }}
                     />
+                     {renderInputField("Rise time2 (μs)", String(initialWaveform.velocity))}
                   </div>
                 )}
                 {initialWaveform.amplitude !== undefined && (
@@ -191,17 +258,20 @@ const RecommendResult: React.FC = () => {
                         fontSize: "16px",
                       }}
                     />
+                     {renderInputField("Rise time3 (μs)", String(initialWaveform.velocity))}
                   </div>
                 )}
                 {/* Render any additional waveform parameters */}
+                <WaveformChart waveformParams={initialWaveform} />
                 {Object.entries(initialWaveform)
                   .filter(
                     ([key]) =>
                       !["velocity", "frequency", "amplitude"].includes(key)
                   )
                   .map(([key, value]) => (
+                    
                     <div key={key}>
-                      <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                      {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
                         {key.replace(/_/g, " ")}
                       </h4>
                       <input
@@ -217,7 +287,8 @@ const RecommendResult: React.FC = () => {
                           color: "#fff",
                           fontSize: "16px",
                         }}
-                      />
+                      /> */}
+                     {renderInputField(`${key.replace(/_/g, " ")}`, `${String(value)}`)}
                     </div>
                   ))}
               </>
@@ -250,17 +321,11 @@ const RecommendResult: React.FC = () => {
         {/* Printability Analysis */}
         <div style={{ marginBottom: "2rem" }}>
           <h3 style={{ marginBottom: "1rem" }}>🧪 Printability Analysis</h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "1rem",
-            }}
-          >
+          <div>
             {printabilityCheck && typeof printabilityCheck === "object" ? (
               <>
                 <div>
-                  <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                  {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
                     Ohnesorge Number
                   </h4>
                   <input
@@ -276,10 +341,11 @@ const RecommendResult: React.FC = () => {
                       color: "#fff",
                       fontSize: "16px",
                     }}
-                  />
+                  /> */}
+                   {renderInputField(`Ohnesorge Number`, `${String(printabilityCheck.ohnesorge)}`)}
                 </div>
                 <div>
-                  <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                  {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
                     Reynolds Number
                   </h4>
                   <input
@@ -295,10 +361,11 @@ const RecommendResult: React.FC = () => {
                       color: "#fff",
                       fontSize: "16px",
                     }}
-                  />
+                  /> */}
+                  {renderInputField(`Reynolds Number`, `${String(printabilityCheck.reynolds)}`)}
                 </div>
                 <div>
-                  <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                  {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
                     Weber Number
                   </h4>
                   <input
@@ -314,16 +381,17 @@ const RecommendResult: React.FC = () => {
                       color: "#fff",
                       fontSize: "16px",
                     }}
-                  />
+                  /> */}
+                  {renderInputField(`Weber Number`, `${String(printabilityCheck.weber)}`)}
                 </div>
                 {printabilityCheck.warnings &&
                   Array.isArray(printabilityCheck.warnings) &&
                   printabilityCheck.warnings.length > 0 && (
                     <div style={{ gridColumn: "1 / -1" }}>
-                      <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
+                      {/* <h4 style={{ marginBottom: "0.5rem", color: "#fff" }}>
                         Warnings
-                      </h4>
-                      <textarea
+                      </h4> */}
+                      {/* <textarea
                         value={printabilityCheck.warnings.join("\n")}
                         readOnly
                         style={{
@@ -341,7 +409,8 @@ const RecommendResult: React.FC = () => {
                           overflowY: "auto",
                           boxSizing: "border-box",
                         }}
-                      />
+                      /> */}
+                      {renderWarning(`${printabilityCheck.warnings.join("\n")}`)}
                     </div>
                   )}
               </>

@@ -90,7 +90,7 @@ const Recommend: React.FC = () => {
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'auto',
-    padding: '2rem',
+    padding: '0rem !important'
   };
 
   return (

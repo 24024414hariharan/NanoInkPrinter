@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 0rem !important;
     overflow: auto;
   }
   
@@ -155,3 +155,67 @@
     font-size: 0.95rem;
   }
   
+
+  .report-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.report-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.report-section {
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  border-left: 4px solid #007acc;
+  padding-left: 10px;
+}
+
+.section-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+}
+
+.label {
+  font-weight: 500;
+  color: #555;
+  flex: 1;
+}
+
+.value {
+  text-align: right;
+  font-weight: 600;
+  color: #222;
+  flex: 1;
+}

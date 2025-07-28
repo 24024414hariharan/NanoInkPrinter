@@ -60,12 +60,7 @@ export const login = async (body: any) => {
     status: 200,
     data: {
       message: 'Login successful.',
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        username: user.username
-      }
+      token
     }
   };
 };

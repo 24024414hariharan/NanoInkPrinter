@@ -35,6 +35,7 @@ const Register: React.FC = () => {
         name: form.name,
         username: form.username,
         password: form.password,
+        reenterPassword: form.confirmPassword
       });
 
       setSuccess("Registration successful. You can now log in.");
