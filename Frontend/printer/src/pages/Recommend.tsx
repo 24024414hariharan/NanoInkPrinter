@@ -8,20 +8,20 @@ const Recommend: React.FC = () => {
 
   const [form, setForm] = useState({
     inkProperties: {
-      viscosity_mPas: '',
-      surfaceTension_Npm: '',
-      density_kgpm3: '',
+      viscosity_mPas: null as number | null,
+      surfaceTension_Npm: null as number | null,
+      density_kgpm3: null as number | null,
       suppressSatellite: false,
     },
     nozzle: {
-      diameter_um: '',
-      length_mm: '',
-      temperature_C: '',
+      diameter_um: null as number | null,
+      length_mm: null as number | null,
+      temperature_C: null as number | null,
     },
     desiredDroplet: {
-      size_um: '',
-      velocity_mps: '',
-      breakOffTime_us: '',
+      size_um: null as number | null,
+      velocity_mps: null as number | null,
+      breakOffTime_us: null as number | null,
     },
   });
 
@@ -32,18 +32,20 @@ const Recommend: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     group: keyof typeof form
   ) => {
-    setForm({
-      ...form,
+    const { name, value, type, checked } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
       [group]: {
-        ...form[group],
-        [e.target.name]:
-          e.target.type === 'checkbox'
-            ? e.target.checked
-            : e.target.type === 'number'
-              ? parseFloat(e.target.value)
-              : e.target.value,
+        ...prev[group],
+        [name]:
+          type === 'checkbox'
+            ? checked
+            : value === ''
+              ? null
+              : parseFloat(value),
       },
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,14 +65,13 @@ const Recommend: React.FC = () => {
         }
       );
 
-      // ✅ Redirect to result page with data
       navigate('/recommend/result', {
         state: {
           result: res.data,
           inkProperties: form.inkProperties,
           nozzle: form.nozzle,
           desiredDroplet: form.desiredDroplet,
-        }
+        },
       });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Recommendation failed.');
@@ -90,7 +91,7 @@ const Recommend: React.FC = () => {
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'auto',
-    padding: '0rem !important'
+    padding: '0rem !important',
   };
 
   return (
@@ -98,22 +99,27 @@ const Recommend: React.FC = () => {
       <div className="recommend-glass">
         <h2 className="recommend-title">Inkjet Recommendation</h2>
         <form onSubmit={handleSubmit} className="recommend-form">
-          {/* Ink Properties */}
           <h4>Ink Properties</h4>
           <div className="recommend-row">
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="viscosity_mPas"
               placeholder="Viscosity (mPa·s)"
               onChange={(e) => handleInputChange(e, 'inkProperties')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="surfaceTension_Npm"
               placeholder="Surface Tension (N/m)"
               onChange={(e) => handleInputChange(e, 'inkProperties')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="density_kgpm3"
               placeholder="Density (kg/m³)"
@@ -129,22 +135,27 @@ const Recommend: React.FC = () => {
             Suppress Satellite
           </label>
 
-          {/* Nozzle */}
           <h4>Nozzle</h4>
           <div className="recommend-row">
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="diameter_um"
               placeholder="Diameter (µm)"
               onChange={(e) => handleInputChange(e, 'nozzle')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="length_mm"
               placeholder="Length (mm)"
               onChange={(e) => handleInputChange(e, 'nozzle')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="temperature_C"
               placeholder="Temperature (°C)"
@@ -152,22 +163,27 @@ const Recommend: React.FC = () => {
             />
           </div>
 
-          {/* Desired Droplet */}
           <h4>Desired Droplet</h4>
           <div className="recommend-row">
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="size_um"
               placeholder="Size (µm)"
               onChange={(e) => handleInputChange(e, 'desiredDroplet')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="velocity_mps"
               placeholder="Velocity (m/s)"
               onChange={(e) => handleInputChange(e, 'desiredDroplet')}
             />
             <input
+              type="number"
+              step="any"
               className="recommend-input"
               name="breakOffTime_us"
               placeholder="Break-off Time (µs)"
