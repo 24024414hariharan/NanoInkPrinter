@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "start": "node dist/app.js",
+    "build": "tsc",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
