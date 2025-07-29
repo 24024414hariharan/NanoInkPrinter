@@ -12,7 +12,7 @@ app.disable("x-powered-by");
 
 app.use(
     cors({
-      origin: ["http://localhost:3000"],
+      origin: ["https://nanoinkprinter-1.onrender.com","http://localhost:3000"],
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
