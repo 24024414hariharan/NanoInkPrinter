@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import appRoutes from "./routers/appRoutes";
-import { loginLimiter } from "./middleware/rateLimiter";
 import cors from "cors";
 
 dotenv.config();
